@@ -1,6 +1,7 @@
 {
 	"name": "@nerioslamaj/user-tracking",
-	"version": "1.0.6",
+	"version": "1.0.8",
+	"keywords": ["tracking", "svm", "bayes", "user behaviour"],
 	"main": "src/index.js",
 	"license": "MIT",
 	"author": {
