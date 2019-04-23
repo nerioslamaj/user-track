@@ -1,9 +1,18 @@
 {
 	"name": "@nerioslamaj/user-tracking",
-	"version": "1.0.1",
-	"main": "index.js",
+	"version": "1.0.6",
+	"main": "src/index.js",
+	"author": {
+		"name" : "Nerios Lamaj",
+		"email" : "nerios.lamaj@gmail.com",
+		"url" : "https://nerioslamaj.com"
+	},
+	"homepage": "https://github.com/nerioslamaj/user-track",
 	"dependencies": {
 		"bayes": "0.0.7",
 		"libsvm-js": "^0.2.1"
-	}
+	},
+	"devEngines": {
+    "node": "8.x || 9.x || 10.x || 11.x"
+  }
 }
