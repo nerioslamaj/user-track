@@ -1,9 +1,9 @@
-require('libsvm-js').then(SVM => {
-  const SVM = new SVM(); // ...
+require('libsvm-js').then(svm => {
+  const SVM = new svm();
 });
 
-var bayes = require('bayes')
-var NB = bayes()
+const bayes = require('bayes');
+const NB = bayes();
 
 module.exports = function tiny(string) {
   if (typeof string !== "string") throw new TypeError("Tiny wants a string!");
