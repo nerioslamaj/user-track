@@ -1,13 +1,18 @@
 {
 	"name": "@nerioslamaj/user-tracking",
 	"version": "1.0.8",
-	"keywords": ["tracking", "svm", "bayes", "user behaviour"],
+	"keywords": [
+		"tracking",
+		"svm",
+		"bayes",
+		"user behaviour"
+	],
 	"main": "src/index.js",
 	"license": "MIT",
 	"author": {
-		"name" : "Nerios Lamaj",
-		"email" : "nerios.lamaj@gmail.com",
-		"url" : "https://nerioslamaj.com"
+		"name": "Nerios Lamaj",
+		"email": "nerios.lamaj@gmail.com",
+		"url": "https://nerioslamaj.com"
 	},
 	"homepage": "https://github.com/nerioslamaj/user-track",
 	"dependencies": {
@@ -15,6 +20,6 @@
 		"libsvm-js": "^0.2.1"
 	},
 	"devEngines": {
-    "node": "8.x || 9.x || 10.x || 11.x"
-  }
+		"node": "8.x || 9.x || 10.x || 11.x"
+	}
 }
