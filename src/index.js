@@ -1,83 +1,38 @@
 const svm = require('libsvm-js/asm');
-const SVM = new svm();
 
 const bayes = require('bayes');
 const BAYES = bayes();
 
-module.exports = function trainData(data) {
-  if(data) {
-    trainBayes(data.bayes_data).then(x => {
-      return "Bayes finished training"
-    });
-    trainSVM(data.svm_data).then(x => {
-      return "SVM finished training"
-    });
+module.exports = function userPrediction(trainData, predictionData, settings) {
+
+  let svm_training = {
+    features: [],
+    labels: []
+  }
+  const SVM = new svm({
+    kernel: settings.kernel || svm.KERNEL_TYPES.RBF, // The type of kernel I want to use
+    type: settings.type || svm.SVM_TYPES.C_SVC, // The type of SVM I want to run
+    gamma: settings.gamma || 1, // RBF kernel gamma parameter
+    cost: settings.cost || 1 // C_SVC cost parameter
+  });
+  
+  if(trainData && predictionData) {
+    for (var property in data) {
+      BAYES.learn(data[property].bayes_data.search_queries, data[property].bayes_data.label)
+      BAYES.learn(data[property].bayes_data.user_details, data[property].bayes_data.label)
+      svm_training.features.push(data[property].svm_data.features);
+      svm_training.labels.push(data[property].svm_data.label);
+    }
+    SVM.train(svm_training.features, svm_training.labels);
+
+    setInterval(() => {
+      let index = 0;
+      let predictedSvm = SVM.predictOneProbability(predictionData[index].svm_data);
+      let predictedBayes = BAYES.categorize('awesome, cool, amazing!! Yay.')
+      console.log('\x1b[36m%s\x1b[0m', predictionData[index].user, '\tSVM: ' + predictedSvm, '\tBayes: ' + predictedBayes);
+      index++;
+    }, 300)
   } else {
-    return "No data is loaded"
+    return "Train data or prediction data are missing"
   }
 };
-
-function trainBayes(data) {
-  if(data) {
-    data.map(session => {
-      let features = '';
-      const label = session.purchase ? 'positive' : 'negative';
-      delete session.purchase;
-      const values = Object.values(data.bayes_data);
-      values.map(dimension => {
-        features.concat(dimension + ' ')
-      })
-      return BAYES.learn(features, label);
-    })
-  } else {
-    return "No data for Bayes is loaded"
-  }
-}
-
-function trainSVM(data) {
-  if(data) {
-    let features = [];
-    let labels = [];
-    data.map((session, index) => {
-      const label = session.purchase;
-      delete session.purchase;
-      const values = Object.values(data.svm_data);
-      values.map(dimension => {
-        features[index] = [];
-        features[index].push(dimension);
-      })
-      const label = session.purchase ? 1 : 0;
-      labels.push(label);
-    })
-    return SVM.train(features, labels);
-  } else {
-    return "No data for SVM is loaded"
-  }
-}
-
-module.exports = function predictData(data) {
-  if(data) {
-    return [predictBayes(data.bayes_data), predictSVM(data.svm_data)];
-  } else {
-    return "No data is loaded"
-  }
-}
-
-function predictSVM(data) {
-  let features = [];
-  const values = Object.values(data);
-  values.map(dimension => {
-    features[index] = [];
-    features[index].push(dimension);
-  })
-  return SVM.predict(features);
-}
-
-function predictBayes(data) {
-  let features = [];
-  const values = Object.values(data);
-  values.map(dimension => {
-    features.concat(dimension + ' ')
-  })
-  return BAYES.categorize(features);
-}
